@@ -1,5 +1,5 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+//const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // css 분리
 
 module.exports = {
     // entry files
@@ -9,12 +9,15 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/bundle.js'
     },
-    plugins: [
-        // 컴파일 + 번들링 CSS 파일이 저장될 경로와 이름 지정
-        new MiniCssExtractPlugin({
-            filename: 'css/style.css'
-        })
-    ],
+    /*
+        //css 분리
+        plugins: [
+            // 컴파일 + 번들링 CSS 파일이 저장될 경로와 이름 지정
+            new MiniCssExtractPlugin({
+                filename: 'css/style.css'
+            })
+        ],
+    */
     module: {
         rules: [{
                 test: /\.js$/,
@@ -33,10 +36,11 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'style-loader', // CSS 분리X
+                    //MiniCssExtractPlugin.loader,    // css 분리
                     'css-loader',
-                    'sass-loader?outputStyle=expanded'
-                    // 'sass-loader?outputStyle=compressed'
+                    //'sass-loader',  // css 분리X
+                    'sass-loader?outputStyle=expanded' // css 분리                    
                 ],
                 exclude: /node_modules/
             }
@@ -45,4 +49,4 @@ module.exports = {
     devtool: 'source-map',
     // https://webpack.js.org/concepts/mode/#mode-development
     mode: 'development'
-};
+;
